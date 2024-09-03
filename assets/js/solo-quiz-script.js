@@ -4,42 +4,42 @@ $(document).ready(function() {
         // Define your options
     const options = [
         { value: 'brachot', text: 'ברכות' },
-        { value: '[!!! השמות האנגליים עדיין אינם כאן. לשקול שימוש במספרים]', text: 'שבת' },
-        { value: 'geography', text: 'עירובין' },
-        { value: 'kidushin', text: 'פסחים' },
-        { value: 'history', text: 'יומא' },
-        { value: 'geography', text: 'סוכה' },
-        { value: 'kidushin', text: 'ביצה' },
-        { value: 'history', text: 'ראש השנה' },
-        { value: 'geography', text: 'תענית' },
-        { value: 'kidushin', text: 'מגילה' },
-        { value: 'history', text: 'מועד קטן' },
-        { value: 'geography', text: 'חגיגה' },
-        { value: 'brachot', text: 'יבמות' },
-        { value: 'history', text: 'כתובות' },
-        { value: 'geography', text: 'נדרים' },
-        { value: 'kidushin', text: 'נזיר' },
-        { value: 'history', text: 'סוטה' },
-        { value: 'geography', text: 'גטין' },
-        { value: 'kidushin', text: 'קדושין' },
-        { value: 'history', text: 'בבא קמא' },
-        { value: 'geography', text: 'בבא מציעא' },
-        { value: 'kidushin', text: 'בבא בתרא' },
-        { value: 'history', text: 'סנהדרין' },
-        { value: 'geography', text: 'מכות' },
-        { value: 'brachot', text: 'שבועות' },
-        { value: 'history', text: 'עבודה זרה' },
-        { value: 'geography', text: 'הוריות' },
-        { value: 'kidushin', text: 'זבחים' },
-        { value: 'history', text: 'מנחות' },
-        { value: 'geography', text: 'חולין' },
-        { value: 'kidushin', text: 'בכורות' },
-        { value: 'history', text: 'ערכין' },
-        { value: 'geography', text: 'תמורה' },
-        { value: 'kidushin', text: 'כריתות' },
-        { value: 'history', text: 'מעילה' },
-        { value: 'geography', text: 'תמיד' },
-        { value: 'math', text: 'נדה' }
+        { value: 'shabat', text: 'שבת' },
+        { value: 'eruvin', text: 'עירובין' },
+        { value: 'pesahim', text: 'פסחים' },
+        { value: 'yoma', text: 'יומא' },
+        { value: 'sukkah', text: 'סוכה' },
+        { value: 'beitza', text: 'ביצה' },
+        { value: 'rosh hashana', text: 'ראש השנה' },
+        { value: 'ta\'anit', text: 'תענית' },
+        { value: 'megillah', text: 'מגילה' },
+        { value: 'mo\'ed katan', text: 'מועד קטן' },
+        { value: 'hagigah', text: 'חגיגה' },
+        { value: 'yevamot', text: 'יבמות' },
+        { value: 'ketubot', text: 'כתובות' },
+        { value: 'nedarim', text: 'נדרים' },
+        { value: 'nazir', text: 'נזיר' },
+        { value: 'sotah', text: 'סוטה' },
+        { value: 'gittin', text: 'גטין' },
+        { value: 'kiddushin', text: 'קדושין' },
+        { value: 'bava kama', text: 'בבא קמא' },
+        { value: 'bava metzia', text: 'בבא מציעא' },
+        { value: 'bava batra', text: 'בבא בתרא' },
+        { value: 'sanhedrin', text: 'סנהדרין' },
+        { value: 'makkot', text: 'מכות' },
+        { value: 'shevu\'ot', text: 'שבועות' },
+        { value: 'avoda zara', text: 'עבודה זרה' },
+        { value: 'horayot', text: 'הוריות' },
+        { value: 'zevahim', text: 'זבחים' },
+        { value: 'menahot', text: 'מנחות' },
+        { value: 'hullin', text: 'חולין' },
+        { value: 'bekhorot', text: 'בכורות' },
+        { value: 'arakhin', text: 'ערכין' },
+        { value: 'temurah', text: 'תמורה' },
+        { value: 'kreitot', text: 'כריתות' },
+        { value: 'me\'ila', text: 'מעילה' },
+        { value: 'tamid', text: 'תמיד' },
+        { value: 'niddah', text: 'נדה' }
     ];
 
     // Populate the select element
@@ -89,60 +89,61 @@ button.addEventListener('click', async () => {
     }
     async function askDB(masechet) {
         try {
-        var questions = [];
-        // Reference to the 'questions' collection
-        const questionsRef = collection(db, 'questions');
+            var questions = [];
+            // Reference to the specific document in the 'questions' collection
+            const questionsRef = collection(db, 'questions', 'multiple-choice', 'questions');
 
-        // Create a query with where condition and limit
-        const q = query(
-            questionsRef,
-            where("masechet", '==', masechet), // Adjust the operator if needed
-            limit(10) // Limit to 10 documents
-        );
+            // Create a query with where condition and limit
+            const q = query(
+                questionsRef,
+                //where("masechet", '==', masechet), // Filter by masechet
+                limit(10)                          // Limit to 10 documents
+            );
 
-        // Execute the query
-        const querySnapshot = await getDocs(q);
+            // Execute the query
+            const querySnapshot = await getDocs(q);
 
-        // Process the results
-        if (querySnapshot.empty) {
-            console.log("No matching documents found.");
-            return;
+            // Process the results
+            if (querySnapshot.empty) {
+                console.log("No matching documents found.");
+                return [];
+            }
+
+            querySnapshot.forEach((doc) => {
+                console.log(doc.id, "=>", doc.data());
+                questions.push(doc.data());
+            });
+            return questions;
+        } catch (error) {
+            console.error("Error getting documents:", error);
         }
+    }
 
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, "=>", doc.data());
-            questions.push(doc.data());
-        });
-        return questions;
-    } catch (error) {
-        console.error("Error getting documents:", error);
-    }
-    }
+
     function startQuiz() {
         displayQuestion();
     }
 
     function displayQuestion() {
     if (questions.length === 0) {
-        document.getElementById('question-container').innerHTML = 'No questions available.';
+        //document.getElementById('question-container').innerHTML = 'No questions available.';
         return;
     }
 
     if (currentQuestionIndex >= questions.length) {
-        document.getElementById('question-container').innerHTML = 'Quiz complete!';
+        // document.getElementById('question-container').innerHTML = 'Quiz complete!';
         document.getElementById('next-button').style.display = 'none';
         return;
     }
 
     const questionObject = questions[currentQuestionIndex];
-    questionTextElement.text(questionObject.question);
-    var answerDict = shuffleArray(questionObject.answers);
-    let answers = Object.keys(answerDict);
+    questionTextElement.text(questionObject.questionText);
+    var answers = shuffleArray(questionObject.answers);
     answer1Element.text(answers[0]);
     answer2Element.text(answers[1]);
     answer3Element.text(answers[2]);
     answer4Element.text(answers[3]);
-    console.log(questionTextElement.textContent, questionObject.question);
+    console.log(questionTextElement.text(), questionObject.questionText);
     }
 
      function shuffleArray(array) {

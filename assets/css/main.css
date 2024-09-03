@@ -431,6 +431,7 @@ input, select, textarea {
 
 		.row > .col-10 {
 			width: 83.33333%;
+			margin-top: 1em;
 		}
 
 		.row > .off-10 {
@@ -439,6 +440,7 @@ input, select, textarea {
 
 		.row > .col-11 {
 			width: 91.66667%;
+			margin-top: 1em;
 		}
 
 		.row > .off-11 {
