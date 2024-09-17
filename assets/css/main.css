@@ -383,6 +383,7 @@ input, select, textarea {
 
 		.row > .col-4 {
 			width: 33.33333%;
+			margin-top: 1em;
 		}
 
 		.row > .off-4 {
@@ -399,6 +400,7 @@ input, select, textarea {
 
 		.row > .col-6 {
 			width: 50%;
+			margin-top: 1em;
 		}
 
 		.row > .off-6 {
@@ -415,6 +417,7 @@ input, select, textarea {
 
 		.row > .col-8 {
 			width: 66.66667%;
+			margin-top: 1em;
 		}
 
 		.row > .off-8 {
@@ -3329,3 +3332,20 @@ input, select, textarea {
 			}
 
 		}
+
+.answer-radio-container {
+    display: flex;
+    align-items: center; /* Aligns items vertically */
+    margin-top: 5px; /* Adjust this value to fine-tune the vertical alignment */
+}
+
+.word-button {
+    margin: 5px; /* Add space around the buttons */
+    border-radius: 15px;  /* Make the button edges round */
+
+    /*  padding: 10px; /* Add padding inside the buttons */
+}
+
+.transparent-input {
+  opacity: 0.2;
+}

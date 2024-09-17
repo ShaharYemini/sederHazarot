@@ -24,7 +24,7 @@
 
             <!-- Logo -->
             <a href="index.html" class="logo">
-                <span class="symbol"><img src="images/logo.svg" alt=""/></span><span class="title">Phantom</span>
+                <span class="symbol"><img src="images/logo.svg" alt=""/></span><span class="title">סדר חזרות</span>
             </a>
 
             <!-- Nav -->
@@ -69,6 +69,20 @@
                     <a href="#" id="send" class="button primary">התחל</a>
                 </div>
             </div>
+            <div class="row gtr-uniform">
+                <div class="col-4 col-12-small">
+                    <input type="checkbox" id="multiple-choice-checkbox" name="question-type" value="multiple-choice" checked="checked">
+                    <label for="multiple-choice-checkbox">Multiple-Answers</label>
+                </div>
+                <div class="col-4 col-12-small">
+                    <input type="checkbox" id="open-question-checkbox" name="question-type" value="open-question" checked="checked">
+                    <label for="open-question-checkbox">Open Question</label>
+                </div>
+                <div class="col-4 col-12-small">
+                    <input type="checkbox" id="true-false-checkbox" name="question-type" value="true-false" checked="checked">
+                    <label for="true-false-checkbox">True or False</label>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -76,19 +90,58 @@
     <!-- Quiz -->
     <div id="quiz">
         <div class="inner">
-            <h2>בחר את התשובה הנכונה:</h2>
-            <span class="image fit">
-                <img src="images/pic16.jpg" alt>
-            </span>
-            <p id="question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה האחרונה?</p>
-            <a href="#" class="button fit" id="answer1-button">Default</a>
-            <a href="#" class="button fit" id="answer2-button">Default</a>
-            <a href="#" class="button fit" id="answer3-button">Default</a>
-            <a href="#" class="button fit" id="answer4-button">Default</a>
+            <!-- Multiple-Choice Question Display -->
+            <div id="multiple-choice-question-display" class="question-form" style="display:none;">
+                <h2>בחר את התשובה הנכונה:</h2>
+
+                <!-- Question Text -->
+                <p id="multiple-choice-question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה האחרונה?</p>
+
+                <!-- Multiple-Choice Answer Buttons -->
+                <a href="#" class="button fit" id="mc-answer1-button">Default</a>
+                <a href="#" class="button fit" id="mc-answer2-button">Default</a>
+                <a href="#" class="button fit" id="mc-answer3-button">Default</a>
+                <a href="#" class="button fit" id="mc-answer4-button">Default</a>
+                <hr>
+            </div>
+
+            <!-- True/False Question Display -->
+            <div id="true-false-question-display" class="question-form" style="display:none;">
+                <h2>בחר את התשובה הנכונה:</h2>
+
+                <!-- Question Text -->
+                <p id="true-false-question-text">טקסט של שאלה: נכון או לא נכון - רב אשי היה המנצח?</p>
+
+                <!-- True/False Answer Buttons -->
+                <a href="#" class="button fit" id="tf-answer1-button">True</a>
+                <a href="#" class="button fit" id="tf-answer2-button">False</a>
+                <hr>
+            </div>
+
+
+            <!-- Display Open Question -->
+            <div id="open-question-display" class="question-form" style="display:none;">
+                <h2>Open Question</h2>
+
+                <!-- Question Text -->
+                <p id="open-question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה האחרונה?</p>
+
+
+                <!-- Locked Answer Text Box -->
+                <textarea id="answer-line" readonly rows="2" placeholder="התשובה שלך תופיע כאן"></textarea>
+
+                <!-- Word Bank -->
+                <div id="word-bank" class="word-bank">
+                    <!-- Buttons with words will be dynamically generated here -->
+                </div>
+
+                <!-- Send Button -->
+                <a href="#" id="open-question-submit" class="button primary">Submit Answer</a>
+                <hr>
+            </div>
         </div>
     </div>
 
-    <hr>
     <!-- Footer -->
     <footer id="footer">
         <div class="inner">

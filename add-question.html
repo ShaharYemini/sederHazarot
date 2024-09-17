@@ -24,13 +24,13 @@
 
             <!-- Logo -->
             <a href="index.html" class="logo">
-                <span class="symbol"><img src="images/logo.svg" alt=""/></span><span class="title">Phantom</span>
+                <span class="symbol"><img src="images/logo.svg" alt=""/></span><span class="title">סדר חזרות</span>
             </a>
 
             <!-- Nav -->
             <nav>
                 <ul>
-                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#menu">תוכן עניינים</a></li>
                 </ul>
             </nav>
 
@@ -52,57 +52,144 @@
     <!-- Main -->
     <div id="main">
         <div class="inner">
-            <h1>כתוב את פרטי השאלה</h1>
-            <div class="row gtr-uniform">
-                <div class="col-6 col-12-small">
-                    <input type="checkbox" id="demo-copy" name="demo-copy">
-                    <label for="demo-copy">השאלה כוללת פרטים מיותר מדף אחד</label>
-                </div>
-            </div>
-            <div class="row gtr-uniform">
-                <div class="col-6 col-12-xsmall">
+            <!-- Question Type Selection -->
+            <div id="question-type-selection">
+                <h1>בחר סוג שאלה להוסיף:</h1>
+                <select id="question-type-select">
+                    <option value="">- בחר סוג -</option>
+                    <option value="multiple-choice">בחירה מרובה (אמריקאית)</option>
+                    <option value="open-question">שאלה פתוחה</option>
+                    <option value="true-false">נכון / לא נכון</option>
+                </select>
+                <div class="col-6 col-12-xsmall" >
                     <select name="masechet-select" id="masechet-select">
                         <option value="">- מסכת -</option>
                     </select>
                 </div>
-                <div class="col-2 col-12-xsmall">
-                    <input type="text" name="from-daf" id="from-daf" value="" placeholder="מדף"/>
-                </div>
-                <div class="col-2 col-12-xsmall">
-                    <input type="text" name="to-daf" id="to-daf" value="" placeholder="עד דף"/>
-                </div>
-            </div>
-            <div class="row gtr-uniform">
-                <div class="col-11 col-12-xsmall">
-                    <input type="text" name="question-text" id="question-text" value="" placeholder="השאלה"/>
-                </div>
-            </div>
-            <div class="row gtr-uniform">
-                <div class="col-10 col-12-xsmall">
-                    <input type="text" name="answer1-text" id="answer1-text" value="" placeholder="תשובה מספר 1"/>
+
+                <div class="row gtr-uniform">
+                    <div class="col-2 col-12-xsmall">
+                        <input type="text" name="from-daf" id="from-daf" value="" placeholder="דף"/>
+                    </div>
+                    <div class="col-4 col-12-small">
+                        <input type="checkbox" id="demo-copy" name="demo-copy">
+                        <label for="demo-copy">השאלה כוללת פרטים מיותר מדף אחד</label>
+                    </div>
+                    <div class="col-2 col-12-xsmall">
+                        <input type="text" name="to-daf" id="to-daf" value="" placeholder="עד דף" class="transparent-input" disabled/>
+                    </div>
                 </div>
             </div>
-            <div class="row gtr-uniform">
-                <div class="col-10 col-12-xsmall">
-                    <input type="text" name="answer2-text" id="answer2-text" value="" placeholder="תשובה מספר 2"/>
+
+            <!-- Multiple Choice Form -->
+            <div id="multiple-choice-form" class="question-form" style="display:none;">
+                <hr>
+                <h2>שאלת בחירה מרובה</h2>
+                <h1>כתוב את פרטי השאלה</h1>
+
+                <div class="row gtr-uniform">
+                    <div class="col-11 col-12-xsmall">
+                        <input type="text" name="question-text" id="question-text" value="" placeholder="השאלה"/>
+                    </div>
+                </div>
+
+                <div class="row gtr-uniform">
+                    <div class="col-8 col-12-xsmall">
+                        <input type="text" name="answer1-text" id="answer1-text" value="" placeholder="תשובה מספר 1"/>
+                    </div>
+                    <div class="col-4 col-12-xsmall answer-radio-container">
+                        <input type="radio" id="correct-answer-1" name="correct-answer" value="1" checked="checked">
+                        <label for="correct-answer-1">תשובה נכונה</label>
+                    </div>
+                </div>
+                <div class="row gtr-uniform">
+                    <div class="col-8 col-12-xsmall">
+                        <input type="text" name="answer2-text" id="answer2-text" value="" placeholder="תשובה מספר 2"/>
+                    </div>
+                    <div class="col-4 col-12-xsmall answer-radio-container">
+                        <input type="radio" id="correct-answer-2" name="correct-answer" value="2">
+                        <label for="correct-answer-2">תשובה נכונה</label>
+                    </div>
+                </div>
+                <div class="row gtr-uniform">
+                    <div class="col-8 col-12-xsmall">
+                        <input type="text" name="answer3-text" id="answer3-text" value="" placeholder="תשובה מספר 3"/>
+                    </div>
+                    <div class="col-4 col-12-xsmall answer-radio-container">
+                        <input type="radio" id="correct-answer-3" name="correct-answer" value="3">
+                        <label for="correct-answer-3">תשובה נכונה</label>
+                    </div>
+                </div>
+                <div class="row gtr-uniform">
+                    <div class="col-8 col-12-xsmall">
+                        <input type="text" name="answer4-text" id="answer4-text" value="" placeholder="תשובה מספר 4"/>
+                    </div>
+                    <div class="col-4 col-12-xsmall answer-radio-container">
+                        <input type="radio" id="correct-answer-4" name="correct-answer" value="4">
+                        <label for="correct-answer-4">תשובה נכונה</label>
+                    </div>
+                </div>
+
+
+                <hr>
+                <div class="row gtr-uniform">
+                    <div class="col-2 col-12-xsmall">
+                        <a href="#" id="send-multiple-choice-question" class="button primary">שלח</a>
+                    </div>
                 </div>
             </div>
-            <div class="row gtr-uniform">
-                <div class="col-10 col-12-xsmall">
-                    <input type="text" name="answer3-text" id="answer3-text" value="" placeholder="תשובה מספר 3"/>
+
+            <!-- Open Question Form -->
+            <div id="open-question-form" class="question-form" style="display:none;">
+                <hr>
+                <h2>שאלה פתוחה</h2>
+                <div class="row gtr-uniform">
+                    <div class="col-12">
+                        <textarea name="question-text" id="open-question-text" placeholder="כתוב את השאלה בצורה ברורה ככל האפשר"
+                                  rows="4"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" name="correct-answer" id="correct-answer" value=""
+                               placeholder="כתוב את התשובה הנכונה בקצרה"/>
+                    </div>
+                    <div class="col-12">
+                        <textarea name="acceptable-answers" id="acceptable-answers"
+                                  placeholder="כתוב תשובות קבילות נוספות, מופרדות בפסיק בין כל אחת ואחת" rows="2"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" name="extra-words" id="extra-words" value=""
+                               placeholder="למחיקה מחווית המשתמש"/>
+                    </div>
+                    <div class="col-12">
+                        <a href="#" id="send-open-question" class="button primary">הוסף שאלה פתוחה</a>
+                    </div>
                 </div>
             </div>
-            <div class="row gtr-uniform">
-                <div class="col-10 col-12-xsmall">
-                    <input type="text" name="answer4-text" id="answer4-text" value="" placeholder="תשובה מספר 4"/>
+
+
+            <!-- True/False Form -->
+            <div id="true-false-form" class="question-form" style="display:none;">
+                <hr>
+                <h2>שאלת נכון או לא נכון</h2>
+                <div class="row gtr-uniform">
+                    <div class="col-12">
+                        <textarea name="question-text" id="true-false-question-text"
+                                  placeholder="כתוב כאן את השאלה" rows="4"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <select name="correct-answer" id="true-false-correct-answer">
+                            <option value="">- Select Correct Answer -</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <a href="#" id="send-true-false-question" class="button primary">הוסף שאלת נכון/ לא נכון</a>
+                    </div>
                 </div>
             </div>
-            <hr>
-            <div class="row gtr-uniform">
-                <div class="col-2 col-12-xsmall">
-                    <a href="#" id="send" class="button primary">שלח</a>
-                </div>
-            </div>
+
+
         </div>
     </div>
 
@@ -158,7 +245,7 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-<script type="module" src ="assets/js/add-question-script.js"></script>
+<script type="module" src="assets/js/add-question-script.js"></script>
 
 </body>
 </html>
