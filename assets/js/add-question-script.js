@@ -293,6 +293,3 @@ function numberToHebrew(num) {
     }
     return result;
 }
-
-
-

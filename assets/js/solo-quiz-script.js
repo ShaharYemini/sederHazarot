@@ -1,4 +1,4 @@
-import { db, collection, query, where, limit, getDocs, app } from './firebaseInit.js'; // Ensure the path is correct
+import { db, collection, query, where, limit, getDocs, app, auth, doc, getDoc, updateDoc } from './firebaseInit.js'; // Ensure the path is correct
 
 $(document).ready(function() {
         // Define your options
@@ -97,23 +97,46 @@ async function askDB(masechet, selectedTypes, from_daf, to_daf) {
         var questions = [];
         const questionsRef = collection(db, 'questions');
 
-        if (!from_daf || isNaN(from_daf)) {
-            from_daf = "א";
-        }
-        if (!to_daf || isNaN(to_daf)) {
-            to_daf = "ת";
-        }
-        const q = query(
-            questionsRef,
-            where("masechet", '==', masechet),
-            where("type", 'in', selectedTypes),
-            where("fromDaf", '>=', hebrewToNumber(from_daf)),
-            where("toDaf", '<=', hebrewToNumber(to_daf)),
-            limit(10)
-        );
-        console.log(masechet, selectedTypes);
+        let q; // Declare q outside the if-else blocks
 
-        const querySnapshot = await getDocs(q);
+if (!from_daf && !to_daf) {
+    q = query(
+        questionsRef,
+        where("masechet", '==', masechet),
+        where("type", 'in', selectedTypes),
+        limit(10)
+    );
+} else if (!from_daf) {
+    q = query(
+        questionsRef,
+        where("masechet", '==', masechet),
+        where("type", 'in', selectedTypes),
+        where("toDaf", '<=', hebrewToNumber(to_daf)),
+        limit(10)
+    );
+} else if (!to_daf) {
+    q = query(
+        questionsRef,
+        where("masechet", '==', masechet),
+        where("type", 'in', selectedTypes),
+        where("fromDaf", '>=', hebrewToNumber(from_daf)),
+        limit(10)
+    );
+} else {
+    q = query(
+        questionsRef,
+        where("masechet", '==', masechet),
+        where("type", 'in', selectedTypes),
+        where("fromDaf", '>=', hebrewToNumber(from_daf)),
+        where("toDaf", '<=', hebrewToNumber(to_daf)),
+        limit(10)
+    );
+}
+
+console.log(masechet, selectedTypes);
+
+const querySnapshot = await getDocs(q);
+
 
         if (querySnapshot.empty) {
             return [];
@@ -195,14 +218,47 @@ function startQuiz(questions) {
         }
     }
 
-    // Function to end the quiz and show the final score
-    function endQuiz() {
-        // Hide all displays
-        $('#multiple-choice-question-display').hide();
-        $('#open-question-display').hide();
-        $('#true-false-question-display').hide();
+    async function endQuiz() {
+    // Hide all displays
+    $('#multiple-choice-question-display').hide();
+    $('#open-question-display').hide();
+    $('#true-false-question-display').hide();
+
+    const user = auth.currentUser;
+
+    if (user) {
+        const userRef = doc(db, 'users', user.uid);
+
+        try {
+            // Fetch the current user data
+            const userSnapshot = await getDoc(userRef);
+
+            if (userSnapshot.exists()) {
+                // Get the user's current score
+                const currentScore = userSnapshot.data().score || 0;
+
+                // Calculate the new score (add the current quiz score)
+                const newScore = currentScore + score;
+
+                // Update the user's score in Firestore
+                await updateDoc(userRef, { score: newScore });
+
+                // Update the score in the header
+                $('#user-score').text(`Score: ${newScore}`);
+
+                alert(`Quiz finished! Your score: ${score}/${questions.length}`);
+            } else {
+                console.log('No such user document!');
+            }
+        } catch (error) {
+            console.error('Error updating score: ', error);
+        }
+    } else {
         alert(`Quiz finished! Your score: ${score}/${questions.length}`);
+        console.log('No user signed in.');
     }
+}
+
 
     // Display the first question
     displayQuestion();
@@ -234,17 +290,11 @@ function validate(masechet, from_daf, to_daf) {
         alert('בבקשה בחר מסכת.');
         return false;
     }
-    if (!from_daf || isNaN(from_daf)) {
-        return true;
-    }
     try {
         hebrewToNumber(from_daf);
     } catch (error) {
         alert('בבקשה הזן דף תקף.');
         return false;
-    }
-    if (!to_daf || isNaN(to_daf)) {
-        return true;
     }
     try {
         hebrewToNumber(to_daf);

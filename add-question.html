@@ -17,9 +17,11 @@
 <body class="is-preload">
 <!-- Wrapper -->
 <div id="wrapper">
-
+    <div id="header-placeholder"></div>
+    <script type="module" src="assets/js/header.js"></script>
     <!-- Header -->
     <header id="header">
+
         <div class="inner">
 
             <!-- Logo -->
@@ -61,7 +63,7 @@
                     <option value="open-question">שאלה פתוחה</option>
                     <option value="true-false">נכון / לא נכון</option>
                 </select>
-                <div class="col-6 col-12-xsmall" >
+                <div class="col-6 col-12-xsmall">
                     <select name="masechet-select" id="masechet-select">
                         <option value="">- מסכת -</option>
                     </select>
@@ -76,7 +78,8 @@
                         <label for="demo-copy">השאלה כוללת פרטים מיותר מדף אחד</label>
                     </div>
                     <div class="col-2 col-12-xsmall">
-                        <input type="text" name="to-daf" id="to-daf" value="" placeholder="עד דף" class="transparent-input" disabled/>
+                        <input type="text" name="to-daf" id="to-daf" value="" placeholder="עד דף"
+                               class="transparent-input" disabled/>
                     </div>
                 </div>
             </div>
@@ -145,7 +148,8 @@
                 <h2>שאלה פתוחה</h2>
                 <div class="row gtr-uniform">
                     <div class="col-12">
-                        <textarea name="question-text" id="open-question-text" placeholder="כתוב את השאלה בצורה ברורה ככל האפשר"
+                        <textarea name="question-text" id="open-question-text"
+                                  placeholder="כתוב את השאלה בצורה ברורה ככל האפשר"
                                   rows="4"></textarea>
                     </div>
                     <div class="col-12">
@@ -154,7 +158,8 @@
                     </div>
                     <div class="col-12">
                         <textarea name="acceptable-answers" id="acceptable-answers"
-                                  placeholder="כתוב תשובות קבילות נוספות, מופרדות בפסיק בין כל אחת ואחת" rows="2"></textarea>
+                                  placeholder="כתוב תשובות קבילות נוספות, מופרדות בפסיק בין כל אחת ואחת"
+                                  rows="2"></textarea>
                     </div>
                     <div class="col-12">
                         <input type="text" name="extra-words" id="extra-words" value=""
