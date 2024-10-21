@@ -2,15 +2,32 @@ import { db, collection, addDoc } from './firebaseInit.js';
 
 $(document).ready(function() {
 
-    $('#question-type-select').on('change', function () {
-    var selectedType = $(this).val();
-    // Hide all forms
-    $('.question-form').hide();
-    // Show the selected form
-    if (selectedType) {
-        $('#' + selectedType + '-form').show();
-    }
-});
+//    $('#question-type-select').on('change', function () {
+//    var selectedType = $(this).val();
+//    // Hide all forms
+//    $('.question-form').hide();
+//    // Show the selected form
+//    if (selectedType) {
+//        $('#' + selectedType + '-form').show();
+//    }
+//
+//    var target = $('#target'); // Get the selected value (the target ID)
+//        if (target) { // Check if a valid option is selected
+//            // Calculate the offset of the target section
+//            var targetOffset = target.offset().top;
+//            $.easing.easeOut = function (x) {
+//    return 1 - Math.pow(1 - x, 3); // Cubic ease out function
+//};
+//
+//            // Animate the scrolling
+//            $('html, body').animate({
+//                scrollTop: targetOffset
+//            }, {
+//                duration: 1000, // Total duration in milliseconds
+//                easing: 'easeOut' // Easing function for the scroll
+//            });
+//        }
+//});
 
         // Define your options
     const options = [
@@ -79,6 +96,33 @@ $(document).ready(function() {
                 $('#to-daf').prop('disabled', true).css('opacity', 0.2).val('');
             }
         });
+
+    $('#send-question-details').click(function() {
+        var selectedType = $('#question-type-select').val();
+    // Hide all forms
+    $('.question-form').hide();
+    // Show the selected form
+    if (selectedType) {
+        $('#' + selectedType + '-form').show();
+    }
+
+    var target = $('#target'); // Get the selected value (the target ID)
+        if (target) { // Check if a valid option is selected
+            // Calculate the offset of the target section
+            var targetOffset = target.offset().top;
+            $.easing.easeOut = function (x) {
+    return 1 - Math.pow(1 - x, 3); // Cubic ease out function
+};
+
+            // Animate the scrolling
+            $('html, body').animate({
+                scrollTop: targetOffset
+            }, {
+                duration: 1000, // Total duration in milliseconds
+                easing: 'easeOut' // Easing function for the scroll
+            });
+        }
+    });
 
     $('#send-multiple-choice-question').click(async function(event) {
     event.preventDefault();

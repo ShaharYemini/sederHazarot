@@ -6,7 +6,7 @@
 -->
 <html lang="he" dir="rtl">
 <head>
-    <title>Generic - Phantom by HTML5 UP</title>
+    <title>סדר חזרות - שאלון בודד</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
@@ -20,129 +20,109 @@
     <div id="header-placeholder"></div>
     <script type="module" src="assets/js/header.js"></script>
 
-    <!-- Header -->
-    <header id="header">
-        <div class="inner">
-
-            <!-- Logo -->
-            <a href="index.html" class="logo">
-                <span class="symbol"><img src="images/logo.svg" alt=""/></span><span class="title">סדר חזרות</span>
-            </a>
-
-            <!-- Nav -->
-            <nav>
-                <ul>
-                    <li><a href="#menu">Menu</a></li>
-                </ul>
-            </nav>
-
-        </div>
-    </header>
-
     <!-- Menu -->
-    <nav id="menu">
-        <h2>Menu</h2>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="generic.html">Ipsum veroeros</a></li>
-            <li><a href="generic.html">Tempus etiam</a></li>
-            <li><a href="generic.html">Consequat dolor</a></li>
-            <li><a href="elements.html">Elements</a></li>
-        </ul>
-    </nav>
+    <div id="menu-placeholder"></div>
 
     <!-- Main -->
     <div id="main">
         <div class="inner">
-            <h1>בחר הגדרות שאלון</h1>
-            <div class="row gtr-uniform">
-                <div class="col-6 col-12-xsmall">
-                    <select name="masechet-select" id="masechet-select">
-                        <option value="">- מסכת -</option>
-                    </select>
-                </div>
-                <div class="col-2 col-12-xsmall">
-                    <input type="text" name="from-daf" id="from-daf" value="" placeholder="מדף"/>
-                </div>
-                <div class="col-2 col-12-xsmall">
-                    <input type="text" name="to-daf" id="to-daf" value="" placeholder="עד דף"/>
-                </div>
-                <div class="col-2 col-12-xsmall">
-                    <a href="#" id="send" class="button primary">התחל</a>
-                </div>
-            </div>
-            <div class="row gtr-uniform">
-                <div class="col-4 col-12-small">
-                    <input type="checkbox" id="multiple-choice-checkbox" name="question-type" value="multiple-choice"
-                           checked="checked">
-                    <label for="multiple-choice-checkbox">Multiple-Answers</label>
-                </div>
-                <div class="col-4 col-12-small">
-                    <input type="checkbox" id="open-question-checkbox" name="question-type" value="open-question"
-                           checked="checked">
-                    <label for="open-question-checkbox">Open Question</label>
-                </div>
-                <div class="col-4 col-12-small">
-                    <input type="checkbox" id="true-false-checkbox" name="question-type" value="true-false"
-                           checked="checked">
-                    <label for="true-false-checkbox">True or False</label>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div id="quiz-details">
+                <h1>בחר הגדרות שאלון</h1>
+                <div class="row gtr-uniform">
+                    <div class="col-6 col-12-xsmall">
+                        <select name="masechet-select" id="masechet-select">
+                            <option value="">- מסכת -</option>
+                        </select>
+                    </div>
+                    <div class="col-2 col-12-xsmall">
+                        <input type="text" name="from-daf" id="from-daf" value="" placeholder="מדף"/>
+                    </div>
+                    <div class="col-2 col-12-xsmall">
+                        <input type="text" name="to-daf" id="to-daf" value="" placeholder="עד דף"/>
+                    </div>
+                    <div class="col-2 col-12-xsmall">
+                        <a href="#" id="send" class="button primary">התחל</a>
+                    </div>
 
-    <hr>
-    <!-- Quiz -->
-    <div id="quiz">
-        <div class="inner">
-            <!-- Multiple-Choice Question Display -->
-            <div id="multiple-choice-question-display" class="question-form" style="display:none;">
-                <h2>בחר את התשובה הנכונה:</h2>
-
-                <!-- Question Text -->
-                <p id="multiple-choice-question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה האחרונה?</p>
-
-                <!-- Multiple-Choice Answer Buttons -->
-                <a href="#" class="button fit" id="mc-answer1-button">Default</a>
-                <a href="#" class="button fit" id="mc-answer2-button">Default</a>
-                <a href="#" class="button fit" id="mc-answer3-button">Default</a>
-                <a href="#" class="button fit" id="mc-answer4-button">Default</a>
-                <hr>
-            </div>
-
-            <!-- True/False Question Display -->
-            <div id="true-false-question-display" class="question-form" style="display:none;">
-                <h2>בחר את התשובה הנכונה:</h2>
-
-                <!-- Question Text -->
-                <p id="true-false-question-text">טקסט של שאלה: נכון או לא נכון - רב אשי היה המנצח?</p>
-
-                <!-- True/False Answer Buttons -->
-                <a href="#" class="button fit" id="tf-answer1-button">True</a>
-                <a href="#" class="button fit" id="tf-answer2-button">False</a>
-                <hr>
+                    <div class="col-4 col-12-small">
+                        <input type="checkbox" id="multiple-choice-checkbox" name="question-type"
+                               value="multiple-choice"
+                               checked="checked">
+                        <label for="multiple-choice-checkbox">Multiple-Answers</label>
+                    </div>
+                    <div class="col-4 col-12-small">
+                        <input type="checkbox" id="open-question-checkbox" name="question-type" value="open-question"
+                               checked="checked">
+                        <label for="open-question-checkbox">שאלה פתוחה</label>
+                    </div>
+                    <div class="col-4 col-12-small">
+                        <input type="checkbox" id="true-false-checkbox" name="question-type" value="true-false"
+                               checked="checked">
+                        <label for="true-false-checkbox">True or False</label>
+                    </div>
+                </div>
             </div>
 
 
-            <!-- Display Open Question -->
-            <div id="open-question-display" class="question-form" style="display:none;">
-                <h2>Open Question</h2>
+            <span class="image secondary"><img src="images/pic13.jpg" alt=""/></span>
 
-                <!-- Question Text -->
-                <p id="open-question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה האחרונה?</p>
+            <hr>
+            <div id="target"></div>
+
+            <!-- Quiz -->
+            <div id="quiz">
+                <div class="inner">
+                    <!-- Multiple-Choice Question Display -->
+                    <div id="multiple-choice-question-display" class="question-form" style="display:none;">
+                        <h2>בחר את התשובה הנכונה:</h2>
+
+                        <!-- Question Text -->
+                        <p id="multiple-choice-question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה
+                            האחרונה?</p>
+
+                        <!-- Multiple-Choice Answer Buttons -->
+                        <a href="#" class="button fit" id="mc-answer1-button">Default</a>
+                        <a href="#" class="button fit" id="mc-answer2-button">Default</a>
+                        <a href="#" class="button fit" id="mc-answer3-button">Default</a>
+                        <a href="#" class="button fit" id="mc-answer4-button">Default</a>
+                        <hr>
+                    </div>
+
+                    <!-- True/False Question Display -->
+                    <div id="true-false-question-display" class="question-form" style="display:none;">
+                        <h2>בחר את התשובה הנכונה:</h2>
+
+                        <!-- Question Text -->
+                        <p id="true-false-question-text">טקסט של שאלה: נכון או לא נכון - רב אשי היה המנצח?</p>
+
+                        <!-- True/False Answer Buttons -->
+                        <a href="#" class="button fit" id="tf-answer1-button">True</a>
+                        <a href="#" class="button fit" id="tf-answer2-button">False</a>
+                        <hr>
+                    </div>
 
 
-                <!-- Locked Answer Text Box -->
-                <textarea id="answer-line" readonly rows="2" placeholder="התשובה שלך תופיע כאן"></textarea>
+                    <!-- Display Open Question -->
+                    <div id="open-question-display" class="question-form" style="display:none;">
+                        <h2>שאלה פתוחה</h2>
 
-                <!-- Word Bank -->
-                <div id="word-bank" class="word-bank">
-                    <!-- Buttons with words will be dynamically generated here -->
+                        <!-- Question Text -->
+                        <p id="open-question-text">טקסט של שאלה: מה אתה אומר על המשחק של רב אשי בעונה האחרונה?</p>
+
+
+                        <!-- Locked Answer Text Box -->
+                        <textarea id="answer-line" readonly rows="2" placeholder="התשובה שלך תופיע כאן"></textarea>
+
+                        <!-- Word Bank -->
+                        <div id="word-bank" class="word-bank">
+                            <!-- Buttons with words will be dynamically generated here -->
+                        </div>
+
+                        <!-- Send Button -->
+                        <a href="#" id="open-question-submit" class="button primary">בדוק</a>
+                        <hr>
+                    </div>
                 </div>
-
-                <!-- Send Button -->
-                <a href="#" id="open-question-submit" class="button primary">Submit Answer</a>
-                <hr>
             </div>
         </div>
     </div>

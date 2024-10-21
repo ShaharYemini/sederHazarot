@@ -157,6 +157,23 @@ function startQuiz(questions) {
     let currentQuestionIndex = 0;
     let score = 0;
 
+    var target = $('#target'); // Get the selected value (the target ID)
+        if (target) { // Check if a valid option is selected
+            // Calculate the offset of the target section
+            var targetOffset = target.offset().top;
+            $.easing.easeOut = function (x) {
+    return 1 - Math.pow(1 - x, 3); // Cubic ease out function
+};
+
+            // Animate the scrolling
+            $('html, body').animate({
+                scrollTop: targetOffset
+            }, {
+                duration: 1000, // Total duration in milliseconds
+                easing: 'easeOut' // Easing function for the scroll
+            });
+        }
+
     // Display the current question
     function displayQuestion() {
         const questionObject = questions[currentQuestionIndex];
@@ -346,8 +363,15 @@ function displayMultipleChoice(question) {
     // Shuffle words: correct answer words + extra words
     var words = shuffleArray(question.correctAnswer.split(' ').concat(question.extraWords));
 
+    // Keep track of available keys (numbers 0-9 and letters a-z)
+    const availableKeys = [...'1234567890', ...'abcdefghijklmnopqrstuvwxyz'];
+    const keyMapping = {}; // To map keys to buttons
+
     // Create a button for each word and append it to the word bank
-    words.forEach(word => {
+    words.forEach((word, index) => {
+        const assignedKey = availableKeys[index]; // Assign a key to the button
+
+        // Create button with word text and assigned key
         const wordButton = $('<button>')
             .text(word)
             .addClass('word-button')
@@ -358,12 +382,31 @@ function displayMultipleChoice(question) {
                 // Disable the button after it's clicked
                 $(this).prop('disabled', true);
             });
+
+        // Add a small icon with the key next to the word
+        wordButton.append(` <small>[${assignedKey}]</small>`);
+
+        // Map the assigned key to this button for keyboard control
+        keyMapping[assignedKey] = wordButton;
+
+        // Append the button to the word bank
         $('#word-bank').append(wordButton);
     });
 
     // Update the question text
     $('#open-question-text').text(question.questionText);
+
+    // Add event listener to capture key presses
+    $(document).on('keydown', function (event) {
+        const keyPressed = event.key.toLowerCase(); // Get the key pressed, case insensitive
+
+        // Check if the key pressed is assigned to a word button
+        if (keyMapping[keyPressed] && !keyMapping[keyPressed].prop('disabled')) {
+            keyMapping[keyPressed].click(); // Simulate button click
+        }
+    });
 }
+
 
 
 

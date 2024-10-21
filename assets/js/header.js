@@ -26,7 +26,7 @@ function bindHeaderEvents() {
                 });
 
                 $('#username-display').text(user.displayName);
-                $('#user-score').text('Score: 0');
+                $('#user-score').text('ניקוד: 0');
                 $('#signUpButton').hide();
                 $('#signOutButton').show();
             })
@@ -54,18 +54,18 @@ function bindHeaderEvents() {
                     const userScore = userData.score || 0; // Default to 0 if no score is found
 
                     // Display the actual score in the header
-                    $('#user-score').text(`Score: ${userScore}`);
+                    $('#user-score').text(`ניקוד: ${userScore}`);
                 } else {
                     console.log("User data not found, initializing score to 0.");
-                    $('#user-score').text('Score: 0'); // Default if user data doesn't exist yet
+                    $('#user-score').text('ניקוד: 0'); // Default if user data doesn't exist yet
                 }
             } catch (error) {
                 console.error("Error fetching user score:", error);
-                $('#user-score').text('Score: 0'); // Fallback in case of error
+                $('#user-score').text('ניקוד: 0'); // Fallback in case of error
             }
 
             // Set the user's profile picture
-            $('#user-profile-pic').attr('src', user.photoURL || 'default-avatar.png').show();
+            $('#user-profile-pic').attr('src', user.photoURL || 'images/default-profile-pic.jpg').show();
 
             // Hide sign-in/up buttons and show sign-out button
             $('#signInButton, #signUpButton').hide();
@@ -79,9 +79,9 @@ function bindHeaderEvents() {
 
     $('#signOutButton').on('click', function() {
         signOut(auth).then(() => {
-            $('#username-display').text('Guest');
-            $('#user-score').text('Score: 0');
-            $('#user-profile-pic').attr('src', 'default-avatar.png');
+            $('#username-display').text('אורח');
+            $('#user-score').text('ניקוד: 0');
+            $('#user-profile-pic').attr('src', 'images/default-profile-pic.jpg');
             $('#signInButton, #signUpButton').show();
             $('#signOutButton').hide();
         }).catch((error) => {
@@ -96,12 +96,12 @@ function updateUserInfo() {
     if (user) {
         $('#username-display').text(user.displayName);
         $('#user-score').text(`Score: ${userScore}`); // Replace with actual score logic
-        $('#user-profile-pic').attr('src', user.photoURL || 'default-avatar.png').show();
+        $('#user-profile-pic').attr('src', user.photoURL || 'images/default-profile-pic.jpg').show();
         $('#signInButton, #signUpButton').hide();
         $('#signOutButton').show();
     } else {
-        $('#username-display').text('Guest');
-        $('#user-score').text('Score: 0');
+        $('#username-display').text('אורח');
+        $('#user-score').text('ניקוד: 0');
         $('#signInButton, #signUpButton').show();
         $('#signOutButton').hide();
     }

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Comparison: LCS and Levenshtein on Blocks with Indices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .result-block {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Comparison: LCS and Levenshtein on Blocks with Indices</h1>
+    <!-- Text Inputs -->
+    <label for="correct-text">Correct Text:</label>
+    <textarea id="correct-text" rows="4"></textarea>
+    <label for="user-text">User Text:</label>
+    <textarea id="user-text" rows="4"></textarea>
+    <button onclick="compareTexts()">Compare Texts</button>
+    <!-- Results Display -->
+    <div class="results">
+        <h2>Results</h2>
+        <div id="lcs-result" class="result-block">
+            <h3>LCS Result:</h3>
+            <p > <strong> Correct Blocks:</strong> <span id="lcs-correct-blocks"></span></p>
+            <p > <strong> User Blocks:</strong> <span id="lcs-user-blocks"></span></p>
+            <p><strong>Remaining Correct Words:</strong> <span id="remaining-correct"></span></p>
+            <p><strong>Remaining User Words:</strong> <span id="remaining-user"></span></p>
+            <p><strong>Complete Correct Words:</strong> <span id="complete-correct"></span></p>
+            <p><strong>Complete User Words:</strong> <span id="complete-user"></span></p>
+        </div>
+        <div id="levenshtein-result" class="result-block">
+            <h3>Levenshtein Result on Blocks:</h3>
+            <p><strong>Levenshtein Distance:</strong> <span id="levenshtein-distance"></span></p>
+        </div>
+    </div>
+    <script>
+        // Function to find the LCS with indices
+        function findLCSWithIndices(correctArray, userArray) {
+            const correctLength = correctArray.length;
+            const userLength = userArray.length;
+
+            const lcsMatrix = Array(correctLength + 1).fill().map(() => Array(userLength + 1).fill(0));
+            let longestLength = 0;
+            let endCorrect = 0;
+            let endUser = 0;
+
+            for (let i = 1; i <= correctLength; i++) {
+                for (let j = 1; j <= userLength; j++) {
+                    if (correctArray[i - 1].text === userArray[j - 1].text) {
+                        lcsMatrix[i][j] = lcsMatrix[i - 1][j - 1] + 1;
+                        if (lcsMatrix[i][j] > longestLength) {
+                            longestLength = lcsMatrix[i][j];
+                            endCorrect = i;
+                            endUser = j;
+                        }
+                    }
+                }
+            }
+
+            if (longestLength > 0) {
+                const startCorrect = endCorrect - longestLength;
+                const startUser = endUser - longestLength;
+                const lcs = correctArray.slice(startCorrect, endCorrect);
+                return { lcs, startCorrect, endCorrect, startUser, endUser };
+            }
+
+            return { lcs: [], startCorrect: -1, endCorrect: -1, startUser: -1, endUser: -1 };
+        }
+
+        // Function to iterate and get LCS blocks
+        function iterativeLCS(correct, user) {
+            let correctRemaining = getWordsWithIndices(correct);
+            let userRemaining = getWordsWithIndices(user);
+
+            const blocksUserIndices = [];
+            const blocksCorrectIndices = [];
+
+            while (correctRemaining.length > 0 && userRemaining.length > 0) {
+                const { lcs, startCorrect, endCorrect, startUser, endUser } = findLCSWithIndices(correctRemaining, userRemaining);
+
+                if (lcs.length === 0) break;
+
+                blocksUserIndices.push({text: lcs.map(block => block.text).join(' '), index: startUser});
+                blocksCorrectIndices.push({text: lcs.map(block => block.text).join(' '), index: startCorrect});
+
+                correctRemaining = [
+                    ...correctRemaining.slice(0, startCorrect),
+                    ...correctRemaining.slice(endCorrect)
+                ];
+                userRemaining = [
+                    ...userRemaining.slice(0, startUser),
+                    ...userRemaining.slice(endUser)
+                ];
+            }
+
+            return {
+                blocksCorrect: blocksCorrectIndices,
+                blocksUser: blocksUserIndices,
+                correctRemaining: correctRemaining,
+                userRemaining: userRemaining
+            };
+        }
+
+        // Levenshtein distance function
+        function levenshteinDistance(a, b) {
+            const matrix = [];
+
+            let i;
+            for (i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+
+            let j;
+            for (j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+
+            for (i = 1; i <= b.length; i++) {
+                for (j = 1; j <= a.length; j++) {
+                    if (b[i - 1] === a[j - 1]) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+                    }
+                }
+            }
+
+            return matrix[b.length][a.length];
+        }
+
+        // Function to compare texts
+        function compareTexts() {
+            const correctText = document.getElementById('correct-text').value;
+            const userText = document.getElementById('user-text').value;
+
+            // Step 1: Get LCS results
+            const { blocksCorrect, blocksUser, correctRemaining, userRemaining } = iterativeLCS(correctText, userText);
+
+            // Combine blocks and remaining into correct and user answer blocks
+            const correctAnswerBlocks = organizeSubstrings(correctText, blocksCorrect, correctRemaining);
+            const userAnswerBlocks = organizeSubstrings(userText, blocksUser, userRemaining);
+            console.log(correctAnswerBlocks);
+            console.log(userAnswerBlocks);
+
+            document.getElementById('lcs-user-blocks').innerText = blocksUser.map(block => "(" + block.text + ", " + block.index + ")").join(', ');
+            document.getElementById('lcs-correct-blocks').innerText = blocksCorrect.map(block => "(" + block.text + ", " + block.index + ")").join(', ');
+            document.getElementById('remaining-correct').innerText = correctRemaining.map(block => "(" + block.text + ", " + block.index + ")").join(' ');
+            document.getElementById('remaining-user').innerText = userRemaining.map(block => "(" + block.text + ", " + block.index + ")").join(' ');
+            document.getElementById('complete-correct').innerText = correctAnswerBlocks.join(' ');
+            document.getElementById('complete-user').innerText = userAnswerBlocks.join(' ');
+
+            // Step 2: Calculate Levenshtein distance on blocks
+            const levDistance = levenshteinDistance(correctAnswerBlocks, userAnswerBlocks);
+            document.getElementById('levenshtein-distance').innerText = levDistance;
+        }
+
+        function organizeSubstrings(string1, blocklist1, remainder1) {
+            // Initialize empty list for the result
+            const complete1 = [];
+
+            // Combine blocklist1 and remainder1
+            const substringsWithPositions = [...blocklist1, ...remainder1];
+
+            // Sort the substrings by their position in string1
+            substringsWithPositions.sort((a, b) => a.index - b.index);
+
+            console.log(substringsWithPositions);
+            // Extract the sorted substrings into the complete1 array
+            substringsWithPositions.forEach(item => complete1.push(item.text));
+
+            // Return the sorted list of substrings
+            return complete1;
+        }
+
+        function getWordsWithIndices(text) {
+            const words = [];
+            let currentIndex = 0;
+
+            text.split(' ').forEach(word => {
+                const startIndex = text.indexOf(word, currentIndex);
+                words.push({ text: word, index: startIndex });
+                currentIndex = startIndex + word.length;
+            });
+
+            return words;
+        }
+    </script>
+</body>
+</html>

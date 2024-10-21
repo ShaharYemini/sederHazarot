@@ -89,7 +89,18 @@
 
 			});
 
-	// Menu.
+
+
+
+
+
+})(jQuery);
+
+$(window).on('load', function() {
+    $('#footer-placeholder').load('footer.html')
+    $('#menu-placeholder').load('menu.html', function() {
+        // Menu.
+        var $body = $('body');
 		var $menu = $('#menu');
 
 		$menu.wrapInner('<div class="inner"></div>');
@@ -165,7 +176,7 @@
 				event.preventDefault();
 
 				// Toggle.
-					$menu._toggle();
+					$menu._toggle()
 
 			})
 			.on('click', function(event) {
@@ -182,4 +193,98 @@
 
 			});
 
-})(jQuery);
+
+    // Load the settings panel HTML from external file
+$.get('settings-panel.html', function(data) {
+    $body.append(data); // Append settings panel HTML to body
+
+    const $settingsPanel = $('#settings-panel');
+
+    // Wrap inner content and lock mechanism (same as menu)
+    $settingsPanel.wrapInner('<div class="inner"></div>');
+
+    $settingsPanel._locked = false;
+
+    $settingsPanel._lock = function() {
+        if ($settingsPanel._locked)
+            return false;
+
+        $settingsPanel._locked = true;
+
+        window.setTimeout(function() {
+            $settingsPanel._locked = false;
+        }, 350);
+
+        return true;
+    };
+
+    $settingsPanel._show = function() {
+        if ($settingsPanel._lock())
+            $body.addClass('is-settings-visible');
+    };
+
+    $settingsPanel._hide = function() {
+        if ($settingsPanel._lock())
+            $body.removeClass('is-settings-visible');
+    };
+
+    $settingsPanel._toggle = function() {
+    if ($settingsPanel._lock()) {
+        $body.toggleClass('is-settings-visible');
+    }
+};
+
+
+    $settingsPanel
+        .on('click', function(event) {
+            event.stopPropagation();
+        })
+        .on('click', '.close', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $settingsPanel._hide();
+        });
+
+    // Bind event for settings panel toggle
+    $menu
+    .on('click', 'a[href="#settings-panel"]', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        $settingsPanel._toggle();  // This should toggle visibility
+        })
+        .on('click', function(event) {
+            $settingsPanel._hide();
+        })
+        .on('keydown', function(event) {
+            if (event.keyCode == 27) // ESC key
+                $settingsPanel._hide();
+        });
+
+    // Dark mode toggle functionality
+        $('#dark-mode').on('change', function() {
+            if ($(this).is(':checked')) {
+                $body.addClass('dark-mode'); // Activate dark mode
+                $(document).ready(function() {
+                    // Dynamically add the scrollbar-color CSS rule
+                        $('<style id="dark-mode-style">* { scrollbar-color: #454a4d #202324; }</style>').appendTo('head');
+                });
+
+            } else {
+                $body.removeClass('dark-mode'); // Deactivate dark mode
+                // Remove the dynamically added style
+                $('#dark-mode-style').remove();
+            }
+        });
+        // Close the settings panel when clicking outside of it
+        $(document).on('click', function(event) {
+            // If the click is outside the settings panel and not on the settings link
+            if (!$(event.target).closest('#settings-panel, #menu-settings-link').length) {
+                $settingsPanel._hide();
+            }
+        });
+
+    console.log("Event listener for settings panel attached");
+});
+    });
+});
+

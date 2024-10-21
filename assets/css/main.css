@@ -367,6 +367,7 @@ input, select, textarea {
 
 		.row > .col-2 {
 			width: 16.66667%;
+			margin-top: 1em;
 		}
 
 		.row > .off-2 {
@@ -2375,6 +2376,28 @@ input, select, textarea {
 
 			}
 
+		.image.secondary {
+			position: relative;
+    width: 100%;
+    height: 14em; /* Calculate height dynamically */
+    overflow: hidden;
+    		}
+
+			.image.secondary img {
+				width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom; /* Aligns the image to the bottom */
+			}
+
+			@media screen and (max-width: 736px) {
+
+				.image.secondary {
+					margin: 0 0 2em 0;
+				}
+
+			}
+
 /* Table */
 
 	.table-wrapper {
@@ -2623,29 +2646,10 @@ input, select, textarea {
 					height: 100%;
 					opacity: 1.0;
 					z-index: 1;
-					opacity: 0.8;
+					opacity: 0.5;
 				}
 
-				.tiles article > .image:after {
-					pointer-events: none;
-					-moz-transition: opacity 0.5s ease;
-					-webkit-transition: opacity 0.5s ease;
-					-ms-transition: opacity 0.5s ease;
-					transition: opacity 0.5s ease;
-					content: '';
-					display: block;
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 0.25px%3B stroke: %23ffffff%3B %7D%3C/style%3E%3Cline x1='0' y1='0' x2='100' y2='100' /%3E%3Cline x1='100' y1='0' x2='0' y2='100' /%3E%3C/svg%3E");
-					background-position: center;
-					background-repeat: no-repeat;
-					background-size: 100% 100%;
-					opacity: 0.25;
-					z-index: 2;
-				}
+
 
 			.tiles article > a {
 				display: -moz-flex;
@@ -2834,7 +2838,7 @@ input, select, textarea {
 /* Header */
 
 	#header {
-		padding: 8em 0 0.1em 0 ;
+		padding: 1em 0 0.1em 0 ;
 	}
 
 		#header .logo {
@@ -2867,7 +2871,7 @@ input, select, textarea {
 		#header nav {
 			position: fixed;
 			right: 2em;
-			top: 2em;
+			top: 4em;
 			z-index: 10000;
 		}
 
@@ -3320,7 +3324,7 @@ input, select, textarea {
 
 	#wrapper > * > .inner {
 		width: 100%;
-		max-width: 68em;
+		max-width: 75em;
 		margin: 0 auto;
 		padding: 0 2.5em;
 	}
@@ -3339,6 +3343,14 @@ input, select, textarea {
     margin-top: 5px; /* Adjust this value to fine-tune the vertical alignment */
 }
 
+#word-bank {
+    display: flex;
+    flex-wrap: wrap; /* Allows the buttons to wrap onto multiple lines if needed */
+    justify-content: center; /* Centers the buttons horizontally */
+    align-items: center; /* Centers the buttons vertically (if the container has a height) */
+    gap: 10px; /* Optional: adds space between buttons */
+}
+
 .word-button {
     margin: 5px; /* Add space around the buttons */
     border-radius: 15px;  /* Make the button edges round */
@@ -3349,4 +3361,222 @@ input, select, textarea {
 .transparent-input {
   opacity: 0.2;
 }
+
+#question-details, #quiz-details{
+    margin-bottom: 2em;
+}
+
+#header-placeholder {
+    margin-top: 1em;
+    margin-right: 1em;
+}
+#header-placeholder .logo {
+			display: block;
+			border-bottom: 0;
+			color: inherit;
+			font-weight: 900;
+			letter-spacing: 0.35em;
+			margin: 0.5em 0 2.5em 0;
+			text-decoration: none;
+			text-transform: uppercase;
+			display: inline-block;
+		}
+
+			#header-placeholder .logo > * {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			#header-placeholder .logo .symbol {
+				margin-right: 0.65em;
+			}
+
+				#header-placeholder .logo .symbol img {
+					display: block;
+					width: 2em;
+					height: 2em;
+				}
+.tiles article h2 {
+    font-size: 1.5em; /* Increase the font size, adjust as needed */
+}
+
+/* Settings Panel */
+
+#settings-panel {
+    -moz-transform: translateX(22em); /* Initially hidden */
+    -webkit-transform: translateX(22em);
+    -ms-transform: translateX(22em);
+    transform: translateX(22em);
+    -moz-transition: -moz-transform 0.45s ease, visibility 0.45s;
+    -webkit-transition: -webkit-transform 0.45s ease, visibility 0.45s;
+    -ms-transition: -ms-transform 0.45s ease, visibility 0.45s;
+    transition: transform 0.45s ease, visibility 0.45s;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 22em;
+    max-width: 80%;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    background: #585858;
+    color: #ffffff;
+    cursor: default;
+    visibility: hidden;
+    z-index: 10002;
+}
+
+#settings-panel .inner {
+    padding: 2em; /* Adjust padding as needed */
+}
+
+body.is-settings-visible #settings-panel {
+    -moz-transform: translateX(0); /* Panel slides into view */
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    visibility: visible;
+}
+
+
+.settings-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.settings-content {
+    overflow-y: auto;
+    max-height: 90%;
+}
+
+/* Toggle knob style */
+.dark-mode-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.toggle-knob {
+    width: 40px;
+    height: 20px;
+}
+
+/* Dark Mode styles */
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .settings-panel {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode button {
+    color: rgb(176, 170, 159) !important;          /* Light text */
+    box-shadow: rgb(66, 72, 75) 0px 0px 0px 2px inset;
+}
+
+.dark-mode button:hover {
+    background-color: #555;  /* Slightly lighter on hover */
+    color: #fff;             /* Brighter text on hover */
+}
+
+.dark-mode a {
+    color: #8ab4f8;  /* Light blue link color */
+    text-decoration: none;  /* No underline by default */
+}
+
+.dark-mode a:hover {
+    color: #bb86fc;  /* Brighter color on hover */
+    text-decoration: underline;  /* Underline on hover */
+}
+
+.dark-mode #header nav ul li a {
+    background-color: rgba(24, 26, 27, 0.5);
+}
+
+.dark-mode #footer {
+    background-color: rgb(29, 32, 33);
+}
+
+.dark-mode select {
+    background-color: transparent
+}
+
+/* Header Bar CSS */
+#header-bar {
+    position: relative; /* Ensure this is the positioned ancestor */
+}
+#header-bar nav ul {
+    list-style: none; /* Remove bullets */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+#header-bar nav ul li {
+    position: relative; /* Positioned to allow absolute positioning of child elements */
+}
+
+#header-bar nav ul li a {
+    position: relative; /* Ensure the anchor is also positioned */
+    padding: 10px 20px; /* Add some padding for spacing */
+    display: inline-block; /* Ensures the anchor behaves like a block */
+}
+
+#header-bar nav ul li a[href="#menu"] {
+    -webkit-tap-highlight-color: transparent;
+    border-bottom-color: transparent;
+    width: 4em;
+    text-indent: 4em;
+    font-size: 1em;
+        overflow: visible; /* Allow overflowing content */
+
+    padding: 0;
+    white-space: nowrap;
+}
+
+#header-bar nav ul li a[href="#menu"]:before,
+#header-bar nav ul li a[href="#menu"]:after {
+    -moz-transition: opacity 0.2s ease;
+    -webkit-transition: opacity 0.2s ease;
+    -ms-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    width: 3em; /* Set a specific width */
+    height: 3em; /* Set a specific height */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; /* Ensure it scales nicely */
+    transform: translate(-50%, -50%); /* Center the pseudo-elements */
+}
+
+#header-bar nav ul li a[href="#menu"]:before {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23f2849e%3B %7D%3C/style%3E%3Cline x1='0' y1='25' x2='100' y2='25' /%3E%3Cline x1='0' y1='50' x2='100' y2='50' /%3E%3Cline x1='0' y1='75' x2='100' y2='75' /%3E%3C/svg%3E");
+    opacity: 0;
+}
+
+#header-bar nav ul li a[href="#menu"]:after {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23585858%3B %7D%3C/style%3E%3Cline x1='0' y1='25' x2='100' y2='25' /%3E%3Cline x1='0' y1='50' x2='100' y2='50' /%3E%3Cline x1='0' y1='75' x2='100' y2='75' /%3E%3C/svg%3E");
+    opacity: 1;
+}
+
+#header-bar nav ul li a[href="#menu"]:hover:before {
+    opacity: 1;
+}
+
+#header-bar nav ul li a[href="#menu"]:hover:after {
+    opacity: 0;
+}
+
+#header-bar .row.gtr-uniform > nav {
+    padding-left: 0;
+}
+
+
 
